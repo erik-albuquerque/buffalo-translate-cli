@@ -1,34 +1,35 @@
 import './env'
-import { translate } from './commands'
+import { translate, detect } from './commands'
 import { BuffaloType } from './types'
 
 const main = async () => {
-	const text = 'The quick brown fox jumps over the lazy dog'
+	const context = 'The quick brown fox jumps over the lazy dog'
 
 	const args: BuffaloType = {
-		action: 'translate',
+		action: '-d',
 		language: 'pt', // temp
-		context: text,
+		context,
 	}
 
 	const { action } = args // [<translate>[-t], <detect>[-d], <help>[-h]]
 
 	const targetLanguageCode = args.language // <language>['EN', -en]
 
-	const sourceLanguageCode = 'en' // temp
+	const detectLanguage = await detect({ content: context })
 
 	switch (action) {
 		case 'translate':
 		case '-t':
 			await translate({
-				sourceLanguageCode,
+				sourceLanguageCode: detectLanguage?.languageCode ?? '',
 				targetLanguageCode,
 				contents: args.context,
 			})
 			break
 		case 'detect':
 		case '-d':
-			console.log('detect no implemented')
+			const language = await detect({ content: context })
+			console.log('🐃', language && language.languageCode)
 			break
 
 		case 'help':
