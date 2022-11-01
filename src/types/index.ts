@@ -18,3 +18,9 @@ export type TranslateDataType = {
 	translations?: TranslateDataSuccessType
 	error?: TranslateDataErrorType
 }
+
+export type BuffaloType = {
+	action: 'translate' | '-t' | 'detect' | '-d' | 'help' | '-h'
+	language: string
+	context: string
+}

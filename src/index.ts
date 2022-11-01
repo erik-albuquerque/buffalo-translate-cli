@@ -1,58 +1,45 @@
-import * as dotenv from 'dotenv'
-dotenv.config()
+import './env'
+import { translate } from './commands'
+import { BuffaloType } from './types'
 
-import { ResourceType, TranslateDataType } from './types'
+const main = async () => {
+	const text = 'The quick brown fox jumps over the lazy dog'
 
-const TRANSLATE_TEXT_URL = process.env.GOOGLE_CLOUD_TRANSLATE_TEXT_URL as string
-const TRANSLATE_API_TOKEN = process.env.GOOGLE_CLOUD_TRANSLATE_API_TOKEN
-
-const text = 'The quick brown fox jumps over the lazy dog'
-
-const translateText = async () => {
-	const resource: ResourceType = {
-		sourceLanguageCode: 'en',
-		targetLanguageCode: 'pt',
-		contents: [text],
+	const args: BuffaloType = {
+		action: 'translate',
+		language: 'pt', // temp
+		context: text,
 	}
 
-	try {
-		const response = await fetch(TRANSLATE_TEXT_URL, {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${TRANSLATE_API_TOKEN}`,
-			},
-			body: JSON.stringify(resource),
-		})
+	const { action } = args // [<translate>[-t], <detect>[-d], <help>[-h]]
 
-		const data: TranslateDataType = await response.json()
+	const targetLanguageCode = args.language // <language>['EN', -en]
 
-		if (data.error) {
-			throw new Error(
-				`${data.error.code} [${data.error.status}]: ${data.error.message}`
-			)
-		}
+	const sourceLanguageCode = 'en' // temp
 
-		if (data.translations) {
-			const translateData = {
-				resource: {
-					source: resource.sourceLanguageCode.toUpperCase(),
-					target: resource.targetLanguageCode.toUpperCase(),
-					'context(s)':
-						resource.contents.length > 1
-							? resource.contents
-							: resource.contents[0],
-				},
-				content:
-					data.translations.length > 1
-						? data.translations
-						: data.translations[0].translatedText,
-			}
+	switch (action) {
+		case 'translate':
+		case '-t':
+			await translate({
+				sourceLanguageCode,
+				targetLanguageCode,
+				contents: args.context,
+			})
+			break
+		case 'detect':
+		case '-d':
+			console.log('detect no implemented')
+			break
 
-			console.log('🐃:', translateData)
-		}
-	} catch (err) {
-		console.log(err)
+		case 'help':
+		case '-h':
+			console.log('help no implemented')
+			break
+
+		default:
+			console.log('Command not found! Try: help | -h')
+			break
 	}
 }
 
-translateText()
+main()
