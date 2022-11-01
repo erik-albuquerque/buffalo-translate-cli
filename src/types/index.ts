@@ -4,8 +4,17 @@ export type ResourceType = {
 	contents: string | string[]
 }
 
+export type TranslateDataSuccessType = {
+	translatedText: string
+}[]
+
+export type TranslateDataErrorType = {
+	code: number
+	message: string
+	status: string
+}
+
 export type TranslateDataType = {
-	translations: {
-		translatedText: string
-	}[]
+	translations?: TranslateDataSuccessType
+	error?: TranslateDataErrorType
 }

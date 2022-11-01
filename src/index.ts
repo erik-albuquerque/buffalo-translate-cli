@@ -8,24 +8,51 @@ const TRANSLATE_API_TOKEN = process.env.GOOGLE_CLOUD_TRANSLATE_API_TOKEN
 
 const text = 'The quick brown fox jumps over the lazy dog'
 
-const translateText = () => {
+const translateText = async () => {
 	const resource: ResourceType = {
 		sourceLanguageCode: 'en',
 		targetLanguageCode: 'pt',
-		contents: text,
+		contents: [text],
 	}
 
-	fetch(TRANSLATE_TEXT_URL, {
-		method: 'POST',
-		headers: {
-			Authorization: `Bearer ${TRANSLATE_API_TOKEN}`,
-		},
-		body: JSON.stringify(resource),
-	})
-		.then((response) => response.json())
-		.then((data: TranslateDataType) => {
-			console.log('🐃:', data.translations[0].translatedText)
+	try {
+		const response = await fetch(TRANSLATE_TEXT_URL, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${TRANSLATE_API_TOKEN}`,
+			},
+			body: JSON.stringify(resource),
 		})
+
+		const data: TranslateDataType = await response.json()
+
+		if (data.error) {
+			throw new Error(
+				`${data.error.code} [${data.error.status}]: ${data.error.message}`
+			)
+		}
+
+		if (data.translations) {
+			const translateData = {
+				resource: {
+					source: resource.sourceLanguageCode.toUpperCase(),
+					target: resource.targetLanguageCode.toUpperCase(),
+					'context(s)':
+						resource.contents.length > 1
+							? resource.contents
+							: resource.contents[0],
+				},
+				content:
+					data.translations.length > 1
+						? data.translations
+						: data.translations[0].translatedText,
+			}
+
+			console.log('🐃:', translateData)
+		}
+	} catch (err) {
+		console.log(err)
+	}
 }
 
 translateText()
