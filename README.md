@@ -4,4 +4,4 @@
 
 ## Buffalo Translate CLI
 
-Translate word from terminal.
+Translate words via terminal.
