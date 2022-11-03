@@ -3,33 +3,27 @@ import { translate, detect, help } from './commands'
 import { BuffaloActionType, BuffaloType } from './types'
 
 const main = async () => {
-	const context = 'The quick brown fox jumps over the lazy dog'
-
 	const args: BuffaloType = {
-		action: '-d',
-		language: 'pt', // temp
-		context,
+		action: process.argv[2] as BuffaloActionType,
+		language: process.argv[3],
+		context: process.argv[4] || process.argv[3],
 	}
 
-	const { action } = args // [<translate>[-t], <detect>[-d], <help>[-h]]
+	const detectLanguage = await detect({ content: args.context })
 
-	const targetLanguageCode = args.language // <language>['EN', -en]
-
-	const detectLanguage = await detect({ content: context })
-
-	switch (action) {
+	switch (args.action) {
 		case 'translate':
 		case '-t':
 			await translate({
 				sourceLanguageCode: detectLanguage?.languageCode ?? '',
-				targetLanguageCode,
+				targetLanguageCode: args.language,
 				contents: args.context,
 			})
 			break
 
 		case 'detect':
 		case '-d':
-			const language = await detect({ content: context })
+			const language = await detect({ content: args.context })
 			console.log('🐃', language && language.languageCode)
 			break
 
