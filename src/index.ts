@@ -1,5 +1,5 @@
 import './env'
-import { translate, detect, help } from './commands'
+import { translate, detect, help, version } from './commands'
 import { getArgs } from './utils'
 
 const main = async () => {
@@ -21,6 +21,12 @@ const main = async () => {
 		case '-d':
 			const language = await detect({ content: args.context })
 			console.log('🐃', language && language.languageCode)
+			break
+
+		case 'version':
+		case '--version':
+		case '-v':
+			version()
 			break
 
 		case 'help':

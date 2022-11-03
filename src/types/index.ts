@@ -34,6 +34,7 @@ export type BuffaloActionType =
 	| '-t'
 	| 'detect'
 	| '-d'
+	| 'version'
 	| '--version'
 	| '-v'
 	| 'help'
