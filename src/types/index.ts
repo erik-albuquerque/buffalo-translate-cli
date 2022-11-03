@@ -29,8 +29,19 @@ export type DetectDataType = {
 	error?: DataErrorType
 }
 
+export type BuffaloActionType =
+	| 'translate'
+	| '-t'
+	| 'detect'
+	| '-d'
+	| '--version'
+	| '-v'
+	| 'help'
+	| '--help'
+	| '-h'
+
 export type BuffaloType = {
-	action: 'translate' | '-t' | 'detect' | '-d' | 'help' | '-h'
+	action: BuffaloActionType
 	language: string
 	context: string
 }
