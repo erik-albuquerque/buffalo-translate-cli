@@ -1,6 +1,6 @@
 import './env'
-import { translate, detect } from './commands'
-import { BuffaloType } from './types'
+import { translate, detect, help } from './commands'
+import { BuffaloActionType, BuffaloType } from './types'
 
 const main = async () => {
 	const context = 'The quick brown fox jumps over the lazy dog'
@@ -26,6 +26,7 @@ const main = async () => {
 				contents: args.context,
 			})
 			break
+
 		case 'detect':
 		case '-d':
 			const language = await detect({ content: context })
@@ -33,12 +34,13 @@ const main = async () => {
 			break
 
 		case 'help':
+		case '--help':
 		case '-h':
-			console.log('help no implemented')
+			help()
 			break
 
 		default:
-			console.log('Command not found! Try: help | -h')
+			console.log('Command not found! Try: help | --help | -h')
 			break
 	}
 }
