@@ -1,13 +1,9 @@
 import './env'
 import { translate, detect, help } from './commands'
-import { BuffaloActionType, BuffaloType } from './types'
+import { getArgs } from './utils'
 
 const main = async () => {
-	const args: BuffaloType = {
-		action: process.argv[2] as BuffaloActionType,
-		language: process.argv[3],
-		context: process.argv[4] || process.argv[3],
-	}
+	const args = getArgs()
 
 	const detectLanguage = await detect({ content: args.context })
 
