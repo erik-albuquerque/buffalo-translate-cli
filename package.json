@@ -27,7 +27,11 @@
 		"dotenv": "^16.0.3",
 		"node-emoji": "^1.11.0"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/erik-albuquerque/buffalo-translate-cli.git"
+	},
 	"publishConfig": {
-		"@nonsenseez:registry": "https://npm.pkg.github.com"
+		"registry": "https://npm.pkg.github.com/"
 	}
 }
