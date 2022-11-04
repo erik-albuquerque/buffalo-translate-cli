@@ -9,13 +9,13 @@ Translate words via terminal.
 - usage
 
 ```bash
-buffalo translate, -t <language>["EN", -en] <context>, 'translate word.'
+buffalo translate, -t <language>["EN", -en] <context> # translate word.
 
-buffalo detect, -d <context>, 'detect language.'
+buffalo detect, -d <context> # detect language.
 
-buffalo [-v, --version, version], 'output the version number.'
+buffalo [-v, --version, version] #output the version number.
 
-buffalo [-h, --help], 'show all commands.'
+buffalo [-h, --help, help] #show all commands.
 
 # Example:
 
@@ -32,4 +32,13 @@ buffalo detect "example"
 
 ```
 
-> fuck google cloud
+> Note: You have to sign in to the `Google Cloud Platform`(gCloud)
+
+```bash
+  # example
+  gcloud auth application-default login --client-id-file=clientid.json
+  # or
+  gcloud auth application-default login
+```
+
+> .env.example: GOOGLE_CLOUD_PROJECT_ID=`<projectId>`
