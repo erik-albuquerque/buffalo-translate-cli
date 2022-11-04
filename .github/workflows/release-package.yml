@@ -1,33 +1,32 @@
-name: Node.js Package
+publish:
+  name: 'Publish to GitHub Packages'
 
-on:
-  release:
-    types: [created]
+  needs: [package]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: npm test
+  runs-on: ubuntu-18.04
 
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  if: github.repository_owner == 'erik-albuquerque'
+
+  steps:
+    - name: Upload
+
+      uses: actions/download-artifact@v2
+
+      with:
+        name: package
+
+    - uses: actions/setup-node@v1
+
+      with:
+        node-version: 14.x
+
+        registry-url: https://npm.pkg.github.com/
+
+        scope: '@erik-albuquerque'
+
+    - run: echo "registry=https://npm.pkg.github.com/@erik-albuquerque" >> .npmrc
+
+    - run: npm publish $(ls *.tgz)
+
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
