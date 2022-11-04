@@ -1,16 +1,17 @@
-import { ResourceType, TranslateDataType } from '../types'
+import { ResourceType } from '../types'
+import { TranslationServiceClient } from '@google-cloud/translate'
 
 type TranslateProps = ResourceType
 
-const MAIN_URL = process.env.GOOGLE_CLOUD_MAIN_URL as string
 const PROJECT_ID = process.env.GOOGLE_CLOUD_PROJECT_ID
-const TRANSLATE_API_TOKEN = process.env.GOOGLE_CLOUD_TRANSLATE_API_TOKEN
 
 const translate = async ({
 	sourceLanguageCode,
 	targetLanguageCode,
 	contents,
 }: TranslateProps) => {
+	const translationClient = new TranslationServiceClient()
+
 	const resource = {
 		sourceLanguageCode,
 		targetLanguageCode,
@@ -18,23 +19,19 @@ const translate = async ({
 	}
 
 	try {
-		const response = await fetch(`${MAIN_URL}/${PROJECT_ID}/:translateText`, {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${TRANSLATE_API_TOKEN}`,
-			},
-			body: JSON.stringify(resource),
-		})
-
-		const data: TranslateDataType = await response.json()
-
-		if (data.error) {
-			throw new Error(
-				`${data.error.code} [${data.error.status}]: ${data.error.message}`
-			)
+		const request = {
+			parent: `projects/${PROJECT_ID}/locations/global`,
+			mimeType: 'text/plain',
+			contents,
+			sourceLanguageCode,
+			targetLanguageCode,
 		}
 
-		if (data.translations) {
+		const [response] = await translationClient.translateText(request)
+
+		const { translations } = response
+
+		if (translations) {
 			const translateData = {
 				resource: {
 					source: resource.sourceLanguageCode.toUpperCase(),
@@ -45,9 +42,9 @@ const translate = async ({
 							: resource.contents[0],
 				},
 				content:
-					data.translations.length > 1
-						? data.translations
-						: data.translations[0].translatedText,
+					translations.length > 1
+						? translations
+						: translations[0].translatedText,
 			}
 
 			console.log('🐃', translateData)

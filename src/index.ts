@@ -5,15 +5,15 @@ import { getArgs } from './utils'
 const main = async () => {
 	const args = getArgs()
 
-	const detectLanguage = await detect({ content: args.context })
-
 	switch (args.action) {
 		case 'translate':
 		case '-t':
+			const detectLanguage = await detect({ content: args.context })
+
 			await translate({
 				sourceLanguageCode: detectLanguage?.languageCode ?? '',
 				targetLanguageCode: args.language,
-				contents: args.context,
+				contents: [args.context],
 			})
 			break
 
