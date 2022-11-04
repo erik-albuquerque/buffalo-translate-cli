@@ -26,5 +26,8 @@
 		"@google-cloud/translate": "^7.0.3",
 		"dotenv": "^16.0.3",
 		"node-emoji": "^1.11.0"
+	},
+	"publishConfig": {
+		"@nonsenseez:registry": "https://npm.pkg.github.com"
 	}
 }
