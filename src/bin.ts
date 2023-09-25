@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import { command } from './command'
+import { cli } from './cli'
 
-command.parse()
+cli.parse(process.argv)
