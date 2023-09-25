@@ -9,7 +9,10 @@
   },
   "scripts": {
     "build": "esbuild --bundle src/bin.ts --platform=node --outfile=dist/bin.js --packages=external",
-    "ci": "pnpm run build"
+    "ci": "pnpm run build",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write ./src/**/*.ts"
   },
   "keywords": [],
   "author": "Érik Albuquerque",
@@ -21,7 +24,13 @@
   },
   "devDependencies": {
     "@types/node": "^20.6.5",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
     "esbuild": "^0.19.3",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
