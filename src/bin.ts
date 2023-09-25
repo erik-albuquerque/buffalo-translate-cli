@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import { program } from './command'
+import { command } from './command'
 
-program.parse()
+command.parse()
