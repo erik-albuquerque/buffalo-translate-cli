@@ -1,0 +1,23 @@
+{
+  "name": "buffalo-translate-cli",
+  "version": "1.0.0",
+  "description": "Buffalo Translate CLI offers the ability to perform translations directly in the terminal, providing an efficient way of translating texts from one language to another.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^11.0.0",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
