@@ -1,0 +1,3 @@
+const DEFAULT_SOURCE_LANGUAGE = 'auto'
+
+export { DEFAULT_SOURCE_LANGUAGE }
