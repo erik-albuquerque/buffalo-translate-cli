@@ -2,7 +2,7 @@ import 'dotenv/config'
 
 import { Command } from 'commander'
 
-import { getTranslate } from './commands'
+import { getTranslate, detectLanguage } from './commands'
 
 const cli = new Command()
 
@@ -25,5 +25,12 @@ cli
   .option('-tl, --target-language <language>', 'Target language.')
   .alias('t')
   .action(getTranslate)
+
+cli
+  .command('detect')
+  .description('Detect the language of the source text.')
+  .argument('<query>', 'Text to detect.')
+  .alias('d')
+  .action(detectLanguage)
 
 export { cli }

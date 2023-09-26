@@ -37,7 +37,9 @@ const getTranslate = async (
       '/text',
       params.toString()
     )
+
     const { trans } = apiResponse.data
+
     console.log(`🐃 Translation: '${trans}'`)
   } catch (error) {
     if (error instanceof AxiosError) {
