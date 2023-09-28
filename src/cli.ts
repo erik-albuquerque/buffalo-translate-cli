@@ -1,20 +1,21 @@
 import 'dotenv/config'
 
+import { DEFAULT_TARGET_LANGUAGE } from './constants'
 import { version } from '../package.json'
 
-import { Command } from 'commander'
+import { CLI } from './models'
 
 import { getTranslate, detectLanguage } from './commands'
 import { listLanguages } from './options'
 
-const cli = new Command()
+const cli = new CLI()
 
 cli
   .name('buffalo-translate-cli')
   .description(
     'Buffalo Translate CLI offers the ability to perform translations directly in the terminal, providing an efficient way of translating texts from one language to another.'
   )
-  .version(version, '-v, --version', 'output the current version')
+  .version(version, '--version', 'Output the current version')
 
 cli.configureHelp({
   sortSubcommands: true,
@@ -28,10 +29,11 @@ cli
   .description('Translate text to the target language.')
   .argument('<query>', 'Text to translate.')
   .option(
-    '-to, -tl, -lang, --target, --target-language <language>',
-    'Target language.'
+    '-to, --target-language <language>',
+    'Target language.',
+    DEFAULT_TARGET_LANGUAGE
   )
-  .aliases(['tl', 't', 'trans'])
+  .aliases(['t', 'trans'])
   .action(getTranslate)
 
 cli

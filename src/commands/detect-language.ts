@@ -2,6 +2,7 @@ import { URLSearchParams } from 'url'
 
 import { AxiosError, AxiosResponse } from 'axios'
 import { api } from '../lib'
+import { getMode, printMode } from '../utils'
 
 type ApiResponseData = {
   source_lang: string
@@ -9,12 +10,20 @@ type ApiResponseData = {
   trust_level: number
 }
 
+type DetectLanguageOptions = {
+  verbose?: boolean
+  brief?: boolean
+}
+
 /**
  * Function to detect the language of a text.
  *
  * @param query Text to detect.
  */
-const detectLanguage = async (query: string): Promise<void> => {
+const detectLanguage = async (
+  query: string,
+  options: DetectLanguageOptions
+): Promise<void> => {
   if (!query) {
     throw new Error('Invalid parameter.')
   }
@@ -22,6 +31,8 @@ const detectLanguage = async (query: string): Promise<void> => {
   const params = new URLSearchParams({
     text: query
   })
+
+  const { verbose, brief } = options
 
   try {
     const apiResponse: AxiosResponse<ApiResponseData> = await api.post(
@@ -31,7 +42,9 @@ const detectLanguage = async (query: string): Promise<void> => {
 
     const { source_lang } = apiResponse.data
 
-    console.log(`🐃 Detected language is: ${source_lang}`)
+    const mode = getMode(verbose, brief)
+
+    printMode(mode, 'detect', { query, text: source_lang })
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data?.message)
