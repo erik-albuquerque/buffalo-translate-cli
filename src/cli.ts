@@ -1,5 +1,7 @@
 import 'dotenv/config'
 
+import { version } from '../package.json'
+
 import { Command } from 'commander'
 
 import { getTranslate, detectLanguage } from './commands'
@@ -11,7 +13,7 @@ cli
   .description(
     'Buffalo Translate CLI offers the ability to perform translations directly in the terminal, providing an efficient way of translating texts from one language to another.'
   )
-  .version('1.0.2', '-v, --version', 'output the current version')
+  .version(version, '-v, --version', 'output the current version')
 
 cli.configureHelp({
   sortSubcommands: true,
