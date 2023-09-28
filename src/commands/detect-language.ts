@@ -19,6 +19,8 @@ type DetectLanguageOptions = {
  * Function to detect the language of a text.
  *
  * @param query Text to detect.
+ * @param option.verbose Use verbose logging. (default)
+ * @param option.brief Use brief logging.
  */
 const detectLanguage = async (
   query: string,
