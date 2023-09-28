@@ -4,7 +4,8 @@ import { version } from '../package.json'
 
 import { Command } from 'commander'
 
-import { getTranslate, detectLanguage, listLanguages } from './commands'
+import { getTranslate, detectLanguage } from './commands'
+import { listLanguages } from './options'
 
 const cli = new Command()
 
