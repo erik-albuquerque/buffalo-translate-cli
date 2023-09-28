@@ -24,8 +24,11 @@ cli
   .command('translate')
   .description('Translate text to the target language.')
   .argument('<query>', 'Text to translate.')
-  .option('-tl, --target-language <language>', 'Target language.')
-  .alias('t')
+  .option(
+    '-to, -tl, -lang, --target, --target-language <language>',
+    'Target language.'
+  )
+  .aliases(['tl', 't', 'trans'])
   .action(getTranslate)
 
 cli
