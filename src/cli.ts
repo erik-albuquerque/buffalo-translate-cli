@@ -4,7 +4,7 @@ import { version } from '../package.json'
 
 import { Command } from 'commander'
 
-import { getTranslate, detectLanguage } from './commands'
+import { getTranslate, detectLanguage, listLanguages } from './commands'
 
 const cli = new Command()
 
@@ -19,6 +19,8 @@ cli.configureHelp({
   sortSubcommands: true,
   subcommandTerm: (cmd) => cmd.name()
 })
+
+// Main commands
 
 cli
   .command('translate')
@@ -37,5 +39,11 @@ cli
   .argument('<query>', 'Text to detect.')
   .alias('d')
   .action(detectLanguage)
+
+// Main options
+
+cli
+  .option('-ll, --list-languages', 'List all available languages.')
+  .action(listLanguages)
 
 export { cli }
