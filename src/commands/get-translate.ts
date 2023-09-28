@@ -3,7 +3,7 @@ import { URLSearchParams } from 'url'
 import { AxiosError, AxiosResponse } from 'axios'
 import { api } from '../lib'
 
-import { DEFAULT_SOURCE_LANGUAGE } from '../constants'
+import { DEFAULT_SOURCE_LANGUAGE, DEFAULT_TARGET_LANGUAGE } from '../constants'
 
 type ApiResponseData = {
   trans: string
@@ -16,20 +16,22 @@ type ApiResponseData = {
  * Function to get a translation.
  *
  * @param query Text to translate.
- * @param target.targetLanguage Target language.
+ * @param target.targetLanguage Target language. (default: en)
  */
 const getTranslate = async (
   query: string,
-  target: { targetLanguage: string }
+  target?: { targetLanguage: string }
 ): Promise<void> => {
-  if (!query || !target?.targetLanguage) {
+  if (!query) {
     throw new Error('Invalid parameters.')
   }
 
+  const to = target?.targetLanguage || DEFAULT_TARGET_LANGUAGE
+
   const params = new URLSearchParams({
     from: DEFAULT_SOURCE_LANGUAGE,
-    to: target.targetLanguage,
-    text: query
+    text: query,
+    to
   })
 
   try {
