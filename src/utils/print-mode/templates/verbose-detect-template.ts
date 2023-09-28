@@ -1,8 +1,14 @@
+import { infoTemplate } from './info-template'
+
 const verboseDetectTemplate = (query: string, language: string) => {
-  return `🐃
+  return `
+  🐃
+
   text: ${query}
 
   Language: ${language}
+
+  ${infoTemplate}
   `
 }
 

@@ -1,3 +1,5 @@
+import { infoTemplate } from './info-template'
+
 const verboseTranslationTemplate = (
   from: string,
   to: string,
@@ -8,6 +10,8 @@ const verboseTranslationTemplate = (
   to: ${to}
 
   Translation: ${translation}
+
+  ${infoTemplate}
   `
 }
 
