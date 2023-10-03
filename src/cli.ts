@@ -1,14 +1,14 @@
 import 'dotenv/config'
 
-import { DEFAULT_TARGET_LANGUAGE } from './constants'
 import { version } from '../package.json'
 
-import { CLI } from './models'
+import { cli } from './get-cli'
 
-import { getTranslate, detectLanguage } from './commands'
-import { listLanguages } from './options'
-
-const cli = new CLI()
+import {
+  makeTranslateCommand,
+  makeDetectCommand,
+  makeSupportLanguagesOption
+} from './commands'
 
 cli
   .name('buffalo-translate-cli')
@@ -22,31 +22,8 @@ cli.configureHelp({
   subcommandTerm: (cmd) => cmd.name()
 })
 
-// Main commands
-
-cli
-  .command('translate')
-  .description('Translate text to the target language.')
-  .argument('<query>', 'Text to translate.')
-  .option(
-    '-to, --target-language <language>',
-    'Target language.',
-    DEFAULT_TARGET_LANGUAGE
-  )
-  .aliases(['t', 'trans'])
-  .action(getTranslate)
-
-cli
-  .command('detect')
-  .description('Detect the language of the source text.')
-  .argument('<query>', 'Text to detect.')
-  .alias('d')
-  .action(detectLanguage)
-
-// Main options
-
-cli
-  .option('-ll, --list-languages', 'List all available languages.')
-  .action(listLanguages)
+cli.addCommand(makeTranslateCommand())
+cli.addCommand(makeDetectCommand())
+cli.addCommand(makeSupportLanguagesOption())
 
 export { cli }
