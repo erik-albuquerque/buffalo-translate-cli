@@ -48,9 +48,9 @@ Here are some usage examples of the Buffalo Translate CLI:
 To translate text from one language to another, use the **`t`** or **`translate`** option, followed by the target language and the text to be translated. For example:
 
 ```bash
-buffalo translate -tl "en" 'teste de tradução'
+buffalo translate -tl 'en' 'teste de tradução'
 # OR
-buff t -tl "en" 'teste de tradução'
+buff t -tl 'en' 'teste de tradução'
 ```
 
 This will translate the text "teste de tradução" from the source language to the desired language, resulting in:
