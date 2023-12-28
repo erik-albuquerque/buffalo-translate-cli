@@ -20,7 +20,7 @@ buff t <target_language> <query>
 buffalo detect <query>
 # OR
 buff d <query>
-'
+
 # <query>: Text to detect.
 
 ```
